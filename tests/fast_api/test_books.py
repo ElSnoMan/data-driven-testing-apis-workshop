@@ -1,8 +1,12 @@
 import pytest
+import requests
+
+BASE_URL = 'http://localhost:8000'
 
 
 def test_get_all_books():
-    pytest.xfail()
+    response = requests.get(f'{BASE_URL}/books/')
+    assert response.ok
 
 
 def test_user_enters_an_exact_search():

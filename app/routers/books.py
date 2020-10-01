@@ -20,6 +20,12 @@ async def get_all_books():
     return books
 
 
-# @router.get("/users/{username}", tags=["users"])
-# async def read_user(username: str):
-#     return {"username": username}
+@router.get('/books/search/{query}', tags=['books'], response_model=List[BookModel])
+async def search_books(query: str):
+    books = validate_book_model_schema(FASTAPI_MOCKED_BOOKS)
+    matched_books = []
+    query = query.lower()
+    for book in books:
+        if query in book.title.lower() or query in book.author.lower() or query in book.publisher.lower():
+            matched_books.append(book)
+    return matched_books
